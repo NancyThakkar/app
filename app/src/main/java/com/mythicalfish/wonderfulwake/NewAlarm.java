@@ -22,7 +22,7 @@ public class NewAlarm extends AppCompatActivity {
             public void onClick(View v) {
                 int hour = timePicker.getCurrentHour();
                 int minute = timePicker.getCurrentMinute();
-                Alarm newAlarm = new Alarm(hour, minute);
+                Alarm newAlarm = new Alarm(hour, minute, getBaseContext(), NewAlarm.this);
                 newAlarm.save();
             }
         });
