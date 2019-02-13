@@ -13,54 +13,53 @@ import com.google.gson.Gson;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class Alarm {
-    public int id;
-    public int hour;
-    public int minute;
-    public int second;
-    private SharedPreferences prefs;
+    private AlarmObject object;
+    static private SharedPreferences prefs;
     private AlarmManager alarmManager;
     private Intent intent;
     private PendingIntent pendingIntent;
     private Context ctxt;
     private Calendar calendar;
 
-    public Alarm(int hour, int minute, int second, Context ctxt) {
+    public Alarm(int hour, int minute, int second, Context context) {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        this.id = (int) ts.getTime(); // Seems to be negative value
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
-        this.ctxt = ctxt;
-        this.prefs = ctxt.getSharedPreferences("wonderful", Context.MODE_PRIVATE);
+        int id = System.identityHashCode(object);
+        object = new AlarmObject(id, hour, minute, second);
+        ctxt = context;
+        prefs = ctxt.getSharedPreferences("wonderful", Context.MODE_PRIVATE);
     }
 
     protected void save() {
-        //setPref();
+        setPref();
         setIntent();
     }
 
     private void setIntent() {
         intent = new Intent(ctxt, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(ctxt, this.id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(ctxt, object.id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
         calendar = getCalendar();
-        Log.i("ID is:", this.id + "");
-        Log.i("Hour is:", this.hour + "");
-        Log.i("Minute is:", this.minute + "");
+        ArrayList<AlarmObject> list = getList();
+        Log.i("ID is:", object.id + "");
+        Log.i("Hour is:", object.hour + "");
+        Log.i("Minute is:", object.minute + "");
         Log.i("Alarm date is:", getDateString());
+        Log.i("List", list.toString());
         Toast.makeText(ctxt, "Alarm set", Toast.LENGTH_LONG).show();
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        // TODO: Change to setInexactRepeating
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     private Calendar getCalendar() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, this.hour);
-        calendar.set(Calendar.MINUTE, this.minute);
-        calendar.set(Calendar.SECOND, this.second);
+        calendar.set(Calendar.HOUR_OF_DAY, object.hour);
+        calendar.set(Calendar.MINUTE, object.minute);
+        calendar.set(Calendar.SECOND, object.second);
         return calendar;
     }
 
@@ -71,8 +70,8 @@ public class Alarm {
     }
 
     private void setPref() {
-        ArrayList alarmList = new ArrayList<Alarm>();
-        alarmList.add(this);
+        ArrayList<AlarmObject> alarmList = getList();
+        alarmList.add(object);
         Gson gson = new Gson();
         String json = gson.toJson(alarmList);
         SharedPreferences.Editor editor = prefs.edit();
@@ -80,10 +79,23 @@ public class Alarm {
         editor.commit();
     }
 
-    protected Alarm[] retrieveAll() {
+    static protected ArrayList<AlarmObject> getList() {
         String json = prefs.getString("alarmList", "");
         Gson gson = new Gson();
-        Alarm[] alarmList = gson.fromJson(json, Alarm[].class);
-        return alarmList;
+        AlarmObject[] alarmList = gson.fromJson(json, AlarmObject[].class);
+        return new ArrayList<>(Arrays.asList(alarmList));
+    }
+}
+
+class AlarmObject {
+    public int id;
+    public int hour;
+    public int minute;
+    public int second;
+    public AlarmObject(int id, int hour, int minute, int second) {
+        this.id = id;
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
     }
 }
