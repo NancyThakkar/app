@@ -20,44 +20,28 @@ public class NewAlarm extends AppCompatActivity {
         setContentView(R.layout.edit_alarm);
 
         Button saveBtn = findViewById(R.id.saveBtn);
-        final TimePicker timePicker = findViewById(R.id.timePicker);
+        //final TimePicker timePicker = findViewById(R.id.timePicker);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //int hour = timePicker.getCurrentHour();
                 //int minute = timePicker.getCurrentMinute();
-                //Alarm newAlarm = new Alarm(hour, minute, getBaseContext());
-                Timestamp ts = new Timestamp(System.currentTimeMillis());
-                int id = (int) ts.getTime();
-                AlarmObject alarmObject = new AlarmObject(id, getCurrentHour(), getCurrentMinute(), getSec());
-                Alarm newAlarm = new Alarm(alarmObject, getBaseContext());
+                Calendar cal = getTestCal();
+                Number hour = cal.get(Calendar.HOUR_OF_DAY);
+                Number minute = cal.get(Calendar.MINUTE);
+                Number second = cal.get(Calendar.SECOND);
+                Alarm newAlarm = Alarm.build(hour, minute, second, getBaseContext());
                 newAlarm.save();
             }
         });
     }
 
-    private Calendar getCal() {
+    private Calendar getTestCal() {
         Date date = new Date();
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(date);
         return calendar;
     }
-
-    private int getCurrentHour() {
-        Calendar cal = getCal();
-        return cal.get(Calendar.HOUR_OF_DAY);
-    }
-
-    private int getCurrentMinute() {
-        Calendar cal = getCal();
-        return cal.get(Calendar.MINUTE);
-    }
-
-    private int getSec() {
-        Calendar cal = getCal();
-        return cal.get(Calendar.SECOND) + 5;
-    }
-
 
 }

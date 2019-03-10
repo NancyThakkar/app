@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.HawkBuilder;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -12,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Hawk.init(this).setEncryption(HawkBuilder.EncryptionMethod.NO_ENCRYPTION);
+        Hawk.init(getApplicationContext()).build();
         setContentView(R.layout.home);
 
         FloatingActionButton newAlarmBtn = findViewById(R.id.newAlarm);
