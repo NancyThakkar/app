@@ -1,8 +1,6 @@
 package com.mythicalfish.wonderfulwake;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -26,4 +24,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

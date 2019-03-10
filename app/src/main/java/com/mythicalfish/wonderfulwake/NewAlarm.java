@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -27,7 +28,10 @@ public class NewAlarm extends AppCompatActivity {
                 //int hour = timePicker.getCurrentHour();
                 //int minute = timePicker.getCurrentMinute();
                 //Alarm newAlarm = new Alarm(hour, minute, getBaseContext());
-                Alarm newAlarm = new Alarm(getCurrentHour(), getCurrentMinute(), getSec(), getBaseContext());
+                Timestamp ts = new Timestamp(System.currentTimeMillis());
+                int id = (int) ts.getTime();
+                AlarmObject alarmObject = new AlarmObject(id, getCurrentHour(), getCurrentMinute(), getSec());
+                Alarm newAlarm = new Alarm(alarmObject, getBaseContext());
                 newAlarm.save();
             }
         });

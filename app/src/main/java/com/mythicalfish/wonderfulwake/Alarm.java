@@ -1,5 +1,6 @@
 package com.mythicalfish.wonderfulwake;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,13 +11,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Iterator;
 
-public class Alarm {
+public class Alarm extends Activity {
     private AlarmObject object;
     static private SharedPreferences prefs;
     private AlarmManager alarmManager;
@@ -24,34 +25,46 @@ public class Alarm {
     private PendingIntent pendingIntent;
     private Context ctxt;
     private Calendar calendar;
+    static private ArrayList<AlarmObject> alarmList;
 
-    public Alarm(int hour, int minute, int second, Context context) {
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
-        int id = System.identityHashCode(object);
-        object = new AlarmObject(id, hour, minute, second);
+    public Alarm(AlarmObject alarmObject, Context context) {
+        object = alarmObject;
         ctxt = context;
         prefs = ctxt.getSharedPreferences("wonderful", Context.MODE_PRIVATE);
     }
 
+    static protected Alarm find(int id, Context context) {
+        for(AlarmObject alarm : Alarm.all()){
+            if(alarm.id == id) return new Alarm(alarm, context);
+        }
+        AlarmObject ar  = new AlarmObject(0,0,0,0);
+        return new Alarm(ar, context); // TODO: Would rather return false...
+    }
+
     protected void save() {
-        setPref();
+        // TODO: This will always add, not update existing
+        savePref();
         setIntent();
     }
 
     private void setIntent() {
-        intent = new Intent(ctxt, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(ctxt, object.id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
         calendar = getCalendar();
-        ArrayList<AlarmObject> list = getList();
+        pendingIntent = getPendingIntent();
+        alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        ArrayList<AlarmObject> list = Alarm.all();
         Log.i("ID is:", object.id + "");
         Log.i("Hour is:", object.hour + "");
         Log.i("Minute is:", object.minute + "");
         Log.i("Alarm date is:", getDateString());
         Log.i("List", list.toString());
         Toast.makeText(ctxt, "Alarm set", Toast.LENGTH_LONG).show();
-        // TODO: Change to setInexactRepeating
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    private PendingIntent getPendingIntent() {
+        intent = new Intent(ctxt, AlarmReceiver.class);
+        return PendingIntent.getBroadcast(ctxt, object.id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private Calendar getCalendar() {
@@ -69,9 +82,7 @@ public class Alarm {
         return sdf.format(calendar.getTime());
     }
 
-    private void setPref() {
-        ArrayList<AlarmObject> alarmList = getList();
-        alarmList.add(object);
+    private void saveListPref(ArrayList<AlarmObject> alarmList) {
         Gson gson = new Gson();
         String json = gson.toJson(alarmList);
         SharedPreferences.Editor editor = prefs.edit();
@@ -79,11 +90,37 @@ public class Alarm {
         editor.commit();
     }
 
-    static protected ArrayList<AlarmObject> getList() {
+    private void savePref() {
+        alarmList = Alarm.all();
+        alarmList.add(object);
+        saveListPref(alarmList);
+    }
+
+    static protected ArrayList<AlarmObject> all() {
         String json = prefs.getString("alarmList", "");
         Gson gson = new Gson();
         AlarmObject[] alarmList = gson.fromJson(json, AlarmObject[].class);
         return new ArrayList<>(Arrays.asList(alarmList));
+    }
+
+    private void destroy() {
+        alarmList = Alarm.all();
+        for (Iterator<AlarmObject> iterator = alarmList.iterator(); iterator.hasNext(); ) {
+            AlarmObject alarm = iterator.next();
+            if(alarm.id == object.id)
+                iterator.remove();
+        }
+        saveListPref(alarmList);
+        pendingIntent = getPendingIntent();
+        pendingIntent.cancel();
+    }
+
+    static void destroyAll(Context context) {
+        alarmList = Alarm.all();
+        for(AlarmObject item : alarmList){
+            Alarm alarm = Alarm.find(item.id, context);
+            alarm.destroy();
+        }
     }
 }
 
