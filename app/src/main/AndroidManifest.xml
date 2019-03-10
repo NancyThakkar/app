@@ -14,6 +14,10 @@
             android:label="@string/title_activity_new_alarm"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".Sunrise"
+            android:label="Sunrise"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -25,5 +29,4 @@
         </activity>
         <receiver  android:process=":remote" android:name="AlarmReceiver"></receiver>
     </application>
-
 </manifest>
