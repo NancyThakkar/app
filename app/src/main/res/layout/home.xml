@@ -14,4 +14,9 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
+    <ListView
+        android:id="@+id/alarmList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </android.support.design.widget.CoordinatorLayout>
