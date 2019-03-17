@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         Hawk.init(this).setEncryption(new NoEncryption()).build();
         setContentView(R.layout.home);
 
+        showList();
+
         // New alarm button
         FloatingActionButton newAlarmBtn = findViewById(R.id.newAlarm);
         newAlarmBtn.setOnClickListener(new View.OnClickListener() {
@@ -32,13 +34,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(newAlarm);
             }
         });
+    }
 
-        // List of alarms
+    protected void showList() {
         ListView alarmList = findViewById(R.id.alarmList);
         ArrayList<AlarmObject> alarms = Alarm.getAll();
         AlarmListAdapter adapter = new AlarmListAdapter(this, R.layout.list_item, alarms);
         alarmList.setAdapter(adapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showList();
     }
 
 }

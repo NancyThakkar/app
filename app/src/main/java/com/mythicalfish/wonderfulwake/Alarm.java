@@ -55,7 +55,6 @@ public class Alarm {
         alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         Log.i("Set alarm intent", getPrettyTime());
-        Toast.makeText(ctxt, "Alarm set", Toast.LENGTH_LONG).show();
     }
 
     private PendingIntent getPendingIntent() {
