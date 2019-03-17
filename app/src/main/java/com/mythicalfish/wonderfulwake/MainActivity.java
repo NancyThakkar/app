@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.NoEncryption;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Init state, settings & view
         super.onCreate(savedInstanceState);
-        Hawk.init(getApplicationContext()).build();
+        Hawk.init(this).setEncryption(new NoEncryption()).build();
         setContentView(R.layout.home);
 
         // New alarm button

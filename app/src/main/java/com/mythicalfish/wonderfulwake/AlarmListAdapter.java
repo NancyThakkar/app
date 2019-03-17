@@ -23,13 +23,16 @@ public class AlarmListAdapter extends ArrayAdapter<AlarmObject> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        AlarmObject alarm = getItem(position);
+        AlarmObject alarmObject = getItem(position);
+        Alarm alarm = new Alarm(alarmObject, mContext);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView =   inflater.inflate(mResource, parent, false);
         TextView tvTime = convertView.findViewById(R.id.time);
         TextView tvID = convertView.findViewById(R.id.id);
-        tvTime.setText(alarm.hour + "");
-        tvID.setText(alarm.id + "");
+        tvTime.setText(alarm.getPrettyTime());
+        tvID.setText(alarmObject.id + "");
         return convertView;
     }
+
+
 }

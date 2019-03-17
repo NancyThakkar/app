@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -52,8 +53,8 @@ public class Alarm {
     private void setIntent() {
         pendingIntent = getPendingIntent();
         alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getAlarmTime(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        Log.i("Set alarm intent", getAlarmTime() + "");
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        Log.i("Set alarm intent", getPrettyTime());
         Toast.makeText(ctxt, "Alarm set", Toast.LENGTH_LONG).show();
     }
 
@@ -62,12 +63,18 @@ public class Alarm {
         return PendingIntent.getBroadcast(ctxt, object.id.intValue(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private long getAlarmTime() {
+    private Calendar getCalendar() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, object.hour.intValue());
         calendar.set(Calendar.MINUTE, object.minute.intValue());
         calendar.set(Calendar.SECOND, object.second.intValue());
-        return calendar.getTimeInMillis();
+        return calendar;
+    }
+
+    String getPrettyTime() {
+        Calendar calendar = getCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+        return sdf.format(calendar.getTime());
     }
 
     static protected ArrayList<Number> getAllIDs() {
