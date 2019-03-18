@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EditAlarm"></activity>
         <activity
             android:name=".NewAlarm"
             android:label="@string/title_activity_new_alarm"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Sunrise"
             android:label="Sunrise"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -27,6 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver  android:process=":remote" android:name="AlarmReceiver"></receiver>
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:process=":remote" />
     </application>
+
 </manifest>

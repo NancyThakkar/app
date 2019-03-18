@@ -1,6 +1,8 @@
 package com.mythicalfish.wonderfulwake;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,7 @@ public class AlarmListAdapter extends ArrayAdapter<AlarmObject> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        AlarmObject alarmObject = getItem(position);
+        final AlarmObject alarmObject = getItem(position);
         Alarm alarm = new Alarm(alarmObject, mContext);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView =   inflater.inflate(mResource, parent, false);
@@ -31,6 +33,15 @@ public class AlarmListAdapter extends ArrayAdapter<AlarmObject> {
         TextView tvID = convertView.findViewById(R.id.id);
         tvTime.setText(alarm.getPrettyTime());
         tvID.setText(alarmObject.id + "");
+        convertView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent editAlarm = new Intent(mContext, EditAlarm.class);
+                editAlarm.putExtra("id", alarmObject.id);
+                mContext.startActivity(editAlarm);
+            }
+        });
         return convertView;
     }
 

@@ -14,9 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Alarm {
-    private AlarmObject object;
+    AlarmObject object;
     private AlarmManager alarmManager;
     private Intent intent;
     private PendingIntent pendingIntent;
@@ -28,9 +29,7 @@ public class Alarm {
     }
 
     static public Alarm build(Number hour, Number minute, Number second, Context context) {
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
-        Number id = ts.getTime();
-        AlarmObject ao = new AlarmObject(id, hour, minute, second);
+        AlarmObject ao = new AlarmObject(makeID(), hour, minute, second);
         return new Alarm(ao, context);
     }
 
@@ -40,11 +39,12 @@ public class Alarm {
     }
 
     private void saveAlarm() {
-        Hawk.put(object.id + "", object);
+        int id = object.id.intValue();
+        Hawk.put(id + "", object);
         Log.i("Saved alarm object", object.toString());
         ArrayList<Number> idList = Alarm.getAllIDs();
-        if(!idList.contains(object.id)) {
-            idList.add(object.id);
+        if(!idList.contains(id)) {
+            idList.add(id);
             Hawk.put("idList", idList);
             Log.i("Saved alarm ID in list", idList.toString());
         }
@@ -77,7 +77,7 @@ public class Alarm {
     }
 
     static protected ArrayList<Number> getAllIDs() {
-        if(Hawk.contains("idList")) return Hawk.get("idList");
+        if(Hawk.get("idList") != null) return Hawk.get("idList");
         return new ArrayList<>();
     }
 
@@ -118,6 +118,12 @@ public class Alarm {
             a.delete();
         }
         Hawk.put("idList", null);
+    }
+
+    static Number makeID() {
+        int id = (int)(Math.random() * 999 + 1);
+        if(!Hawk.contains(id + "")) return id;
+        return makeID();
     }
 }
 

@@ -20,7 +20,7 @@ public class NewAlarm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_alarm);
+        setContentView(R.layout.new_alarm);
 
         Button saveBtn = findViewById(R.id.saveBtn);
         final TimePicker timePicker = findViewById(R.id.timePicker);
