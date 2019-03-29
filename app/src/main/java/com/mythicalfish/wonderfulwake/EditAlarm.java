@@ -19,6 +19,7 @@ public class EditAlarm extends AppCompatActivity {
         setContentView(R.layout.edit_alarm);
 
         Button saveBtn = findViewById(R.id.saveBtn);
+        Button deleteBtn = findViewById(R.id.deleteBtn);
         Bundle args = getIntent().getExtras();
         String id = (String) args.get("id");
         final Alarm alarm = Alarm.find(id, getApplicationContext());
@@ -33,7 +34,14 @@ public class EditAlarm extends AppCompatActivity {
                 alarm.object.hour = hour;
                 alarm.object.minute = minute;
                 alarm.save();
-                //Toast.makeText(getApplicationContext(), "Alarm set", LENGTH_LONG).show();
+                finish();
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alarm.delete();
                 finish();
             }
         });

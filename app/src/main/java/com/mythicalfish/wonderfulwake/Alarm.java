@@ -78,13 +78,14 @@ public class Alarm {
         return new ArrayList<>();
     }
 
-    static protected ArrayList<AlarmObject> getAll() {
-        ArrayList<AlarmObject> alarmList = new ArrayList<>();
+    static protected ArrayList<Alarm> getAll(Context context) {
+        ArrayList<Alarm> alarmList = new ArrayList<>();
         Iterator<String> iterator = Alarm.getAllIDs().iterator();
         while (iterator.hasNext()) {
             String id = iterator.next();
             AlarmObject alarmObject = Hawk.get(id);
-            alarmList.add(alarmObject);
+            Alarm alarm = new Alarm(alarmObject, context);
+            alarmList.add(alarm);
         }
         return alarmList;
     }
@@ -98,11 +99,16 @@ public class Alarm {
     }
 
 
-    private void delete() {
+    void delete() {
+        String id = object.id;
         ArrayList alarmIDs = Alarm.getAllIDs();
-        alarmIDs.remove(object.id);
-        Hawk.put("idList", alarmIDs);
-        Hawk.delete(object.id);
+        if(alarmIDs.contains(id)) {
+            alarmIDs.remove(id);
+            Hawk.put("idList", alarmIDs);
+        }
+        if(Hawk.contains(id)) {
+            Hawk.delete(id);
+        }
         pendingIntent = getPendingIntent();
         pendingIntent.cancel();
     }
@@ -112,7 +118,9 @@ public class Alarm {
         while (iterator.hasNext()) {
             String id = iterator.next();
             Alarm a = Alarm.find(id, context);
-            a.delete();
+            if(a != null) {
+                a.delete();
+            }
         }
         Hawk.put("idList", null);
     }

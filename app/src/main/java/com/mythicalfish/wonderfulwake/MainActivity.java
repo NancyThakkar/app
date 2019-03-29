@@ -36,18 +36,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    protected void showList() {
-        ListView alarmList = findViewById(R.id.alarmList);
-        ArrayList<AlarmObject> alarms = Alarm.getAll();
-        AlarmListAdapter adapter = new AlarmListAdapter(this, R.layout.list_item, alarms);
-        alarmList.setAdapter(adapter);
-
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         showList();
+    }
+
+    protected void showList() {
+        ListView alarmList = findViewById(R.id.alarmList);
+        ArrayList<Alarm> alarms = Alarm.getAll(getApplicationContext());
+        AlarmListAdapter adapter = new AlarmListAdapter(this, R.layout.list_item, alarms);
+        alarmList.setAdapter(adapter);
+
     }
 
 }
