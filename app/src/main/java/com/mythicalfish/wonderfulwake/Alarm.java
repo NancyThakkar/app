@@ -26,7 +26,7 @@ public class Alarm {
     }
 
     static public Alarm build(Number hour, Number minute, Number second, Context context) {
-        AlarmObject ao = new AlarmObject(makeID(), hour, minute, second);
+        AlarmObject ao = new AlarmObject(makeID(), hour.intValue(), minute.intValue(), second.intValue());
         return new Alarm(ao, context);
     }
 
@@ -61,9 +61,9 @@ public class Alarm {
 
     private Calendar getCalendar() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, object.hour.intValue());
-        calendar.set(Calendar.MINUTE, object.minute.intValue());
-        calendar.set(Calendar.SECOND, object.second.intValue());
+        calendar.set(Calendar.HOUR_OF_DAY, object.hour);
+        calendar.set(Calendar.MINUTE, object.minute);
+        calendar.set(Calendar.SECOND, object.second);
         return calendar;
     }
 
@@ -126,10 +126,10 @@ public class Alarm {
 
 class AlarmObject {
     public String id;
-    public Number hour;
-    public Number minute;
-    public Number second;
-    public AlarmObject(String id, Number hour, Number minute, Number second) {
+    public int hour;
+    public int minute;
+    public int second;
+    public AlarmObject(String id, int hour, int minute, int second) {
         this.id = id;
         this.hour = hour;
         this.minute = minute;

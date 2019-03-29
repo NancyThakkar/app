@@ -23,7 +23,7 @@ public class EditAlarm extends AppCompatActivity {
         String id = (String) args.get("id");
         final Alarm alarm = Alarm.find(id, getApplicationContext());
         timePicker = findViewById(R.id.timePicker);
-        setTime(alarm.object.hour.intValue(), alarm.object.minute.intValue());
+        setTime(alarm.object.hour, alarm.object.minute);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
