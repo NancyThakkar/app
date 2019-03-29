@@ -5,16 +5,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.Random;
 
 public class Alarm {
     AlarmObject object;
@@ -39,10 +36,10 @@ public class Alarm {
     }
 
     private void saveAlarm() {
-        int id = object.id.intValue();
-        Hawk.put(id + "", object);
+        String id = object.id;
+        Hawk.put(id, object);
         Log.i("Saved alarm object", object.toString());
-        ArrayList<Number> idList = Alarm.getAllIDs();
+        ArrayList<String> idList = Alarm.getAllIDs();
         if(!idList.contains(id)) {
             idList.add(id);
             Hawk.put("idList", idList);
@@ -59,7 +56,7 @@ public class Alarm {
 
     private PendingIntent getPendingIntent() {
         intent = new Intent(ctxt, AlarmReceiver.class);
-        return PendingIntent.getBroadcast(ctxt, object.id.intValue(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(ctxt, Integer.parseInt(object.id), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private Calendar getCalendar() {
@@ -76,23 +73,23 @@ public class Alarm {
         return sdf.format(calendar.getTime());
     }
 
-    static protected ArrayList<Number> getAllIDs() {
+    static protected ArrayList<String> getAllIDs() {
         if(Hawk.get("idList") != null) return Hawk.get("idList");
         return new ArrayList<>();
     }
 
     static protected ArrayList<AlarmObject> getAll() {
         ArrayList<AlarmObject> alarmList = new ArrayList<>();
-        Iterator<Number> iterator = Alarm.getAllIDs().iterator();
+        Iterator<String> iterator = Alarm.getAllIDs().iterator();
         while (iterator.hasNext()) {
-            AlarmObject alarmObject = Hawk.get(iterator.next() + "");
+            String id = iterator.next();
+            AlarmObject alarmObject = Hawk.get(id);
             alarmList.add(alarmObject);
         }
         return alarmList;
     }
 
-    static protected Alarm find(Number alarmID, Context context) {
-        String id = alarmID + "";
+    static protected Alarm find(String id, Context context) {
         if(Hawk.contains(id)) {
             AlarmObject alarmObject = Hawk.get(id);
             return new Alarm(alarmObject, context);
@@ -105,34 +102,34 @@ public class Alarm {
         ArrayList alarmIDs = Alarm.getAllIDs();
         alarmIDs.remove(object.id);
         Hawk.put("idList", alarmIDs);
-        Hawk.delete(object.id + "");
+        Hawk.delete(object.id);
         pendingIntent = getPendingIntent();
         pendingIntent.cancel();
     }
 
     static void deleteAll(Context context) {
-        Iterator<Number> iterator = Alarm.getAllIDs().iterator();
+        Iterator<String> iterator = Alarm.getAllIDs().iterator();
         while (iterator.hasNext()) {
-            Number id = iterator.next();
+            String id = iterator.next();
             Alarm a = Alarm.find(id, context);
             a.delete();
         }
         Hawk.put("idList", null);
     }
 
-    static Number makeID() {
-        int id = (int)(Math.random() * 999 + 1);
-        if(!Hawk.contains(id + "")) return id;
+    static String makeID() {
+        String id = (int)(Math.random() * 999 + 1) + "";
+        if(!Hawk.contains(id)) return id;
         return makeID();
     }
 }
 
 class AlarmObject {
-    public Number id;
+    public String id;
     public Number hour;
     public Number minute;
     public Number second;
-    public AlarmObject(Number id, Number hour, Number minute, Number second) {
+    public AlarmObject(String id, Number hour, Number minute, Number second) {
         this.id = id;
         this.hour = hour;
         this.minute = minute;

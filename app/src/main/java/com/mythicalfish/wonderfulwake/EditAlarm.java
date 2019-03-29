@@ -20,7 +20,7 @@ public class EditAlarm extends AppCompatActivity {
 
         Button saveBtn = findViewById(R.id.saveBtn);
         Bundle args = getIntent().getExtras();
-        Number id = (Number) args.get("id");
+        String id = (String) args.get("id");
         final Alarm alarm = Alarm.find(id, getApplicationContext());
         timePicker = findViewById(R.id.timePicker);
         setTime(alarm.object.hour.intValue(), alarm.object.minute.intValue());

@@ -32,7 +32,7 @@ public class AlarmListAdapter extends ArrayAdapter<AlarmObject> {
         TextView tvTime = convertView.findViewById(R.id.time);
         TextView tvID = convertView.findViewById(R.id.id);
         tvTime.setText(alarm.getPrettyTime());
-        tvID.setText(alarmObject.id + "");
+        tvID.setText(alarmObject.id);
         convertView.setOnClickListener(new View.OnClickListener() {
 
             @Override
