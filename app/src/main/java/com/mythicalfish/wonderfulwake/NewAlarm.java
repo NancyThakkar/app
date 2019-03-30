@@ -31,23 +31,12 @@ public class NewAlarm extends AppCompatActivity {
                 int hour = timePicker.getCurrentHour();
                 int minute = timePicker.getCurrentMinute();
                 int second = 0;
-                //Calendar cal = getTestCal();
-                //Number hour = cal.get(Calendar.HOUR_OF_DAY);
-                //Number minute = cal.get(Calendar.MINUTE);
-                //Number second = cal.get(Calendar.SECOND);
                 Alarm newAlarm = Alarm.build(hour, minute, second, getBaseContext());
                 newAlarm.save();
                 Toast.makeText(getApplicationContext(), "Alarm set", LENGTH_LONG).show();
                 finish();
             }
         });
-    }
-
-    private Calendar getTestCal() {
-        Date date = new Date();
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
     }
 
 }
