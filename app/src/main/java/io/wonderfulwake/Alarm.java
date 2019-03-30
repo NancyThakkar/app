@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.orhanobut.hawk.Hawk;
 
@@ -12,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+
+import timber.log.Timber;
 
 public class Alarm {
     AlarmObject object;
@@ -38,12 +39,12 @@ public class Alarm {
     private void saveAlarm() {
         String id = object.id;
         Hawk.put(id, object);
-        Log.i("Saved alarm object", object.toString());
+        Timber.e("Saved alarm object: " + object.toString());
         ArrayList<String> idList = Alarm.getAllIDs();
         if(!idList.contains(id)) {
             idList.add(id);
             Hawk.put("idList", idList);
-            Log.i("Saved alarm ID in list", idList.toString());
+            Timber.e("Saved alarm ID in list: " + idList.toString());
         }
     }
 
@@ -51,7 +52,7 @@ public class Alarm {
         pendingIntent = getPendingIntent();
         alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        Log.i("Set alarm intent", getPrettyTime());
+        Timber.e("Set alarm intent: " + getPrettyTime());
     }
 
     private PendingIntent getPendingIntent() {

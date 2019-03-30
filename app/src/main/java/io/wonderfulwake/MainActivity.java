@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.ListView;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.NoEncryption;
+import timber.log.Timber;
 
 import java.util.ArrayList;
+
+import static timber.log.Timber.DebugTree;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Hawk.init(this).setEncryption(new NoEncryption()).build();
         setContentView(R.layout.home);
+
+        // Logging
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new DebugTree());
+        } else {
+            // TODO: Implement prod logging library
+        }
 
         showList();
 
