@@ -33,15 +33,15 @@ public class EditAlarm extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //int hour = timePicker.getCurrentHour();
-                //int minute = timePicker.getCurrentMinute();
-                Calendar cal = getTestCal();
-                int hour = cal.get(Calendar.HOUR_OF_DAY);
-                int minute = cal.get(Calendar.MINUTE);
-                int second = cal.get(Calendar.SECOND) + 30;
+                int hour = timePicker.getCurrentHour();
+                int minute = timePicker.getCurrentMinute();
+                //Calendar cal = getTestCal();
+                //int hour = cal.get(Calendar.HOUR_OF_DAY);
+                //int minute = cal.get(Calendar.MINUTE);
+                //int second = cal.get(Calendar.SECOND) + 30;
                 alarm.object.hour = hour;
                 alarm.object.minute = minute;
-                alarm.object.second = second;
+                alarm.object.second = 0;
                 alarm.save();
                 finish();
             }
