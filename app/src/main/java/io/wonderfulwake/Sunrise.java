@@ -1,4 +1,4 @@
-package com.mythicalfish.wonderfulwake;
+package io.wonderfulwake;
 
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;

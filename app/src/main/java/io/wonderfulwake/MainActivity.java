@@ -1,4 +1,4 @@
-package com.mythicalfish.wonderfulwake;
+package io.wonderfulwake;
 
 import android.content.Intent;
 import android.os.Bundle;

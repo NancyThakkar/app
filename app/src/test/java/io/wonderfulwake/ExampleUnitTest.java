@@ -1,4 +1,4 @@
-package com.mythicalfish.wonderfulwake;
+package io.wonderfulwake;
 
 import org.junit.Test;
 

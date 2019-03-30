@@ -1,4 +1,4 @@
-package com.mythicalfish.wonderfulwake;
+package io.wonderfulwake;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
