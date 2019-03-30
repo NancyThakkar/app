@@ -1,6 +1,7 @@
 package com.mythicalfish.wonderfulwake;
 
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +22,11 @@ public class Sunrise extends AppCompatActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.sunrise);
 
+        // Birdsong
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.rainforest_1a);
+        mediaPlayer.start();
+
+        // Dismiss
         Button dismissBtn = findViewById(R.id.dismissBtn);
         dismissBtn.setOnClickListener(new View.OnClickListener() {
             @Override
