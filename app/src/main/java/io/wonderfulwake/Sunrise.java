@@ -19,7 +19,7 @@ import java.util.GregorianCalendar;
 
 public class Sunrise extends AppCompatActivity {
 
-    private MediaPlayer audioPlayer = MediaPlayer.create(this, R.raw.rainforest_1a);
+    private MediaPlayer audioPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class Sunrise extends AppCompatActivity {
         setContentView(R.layout.sunrise);
 
         // Play audio: birdsong
+        audioPlayer = MediaPlayer.create(this, R.raw.rainforest_1a);
         audioPlayer.start();
 
         // Play video: sunrise
