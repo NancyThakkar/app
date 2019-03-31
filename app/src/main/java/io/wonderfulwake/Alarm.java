@@ -39,12 +39,12 @@ public class Alarm {
     private void saveAlarm() {
         String id = object.id;
         Hawk.put(id, object);
-        Timber.e("Saved alarm object: " + object.toString());
+        Timber.i("Saved alarm object: " + object.toString());
         ArrayList<String> idList = Alarm.getAllIDs();
         if(!idList.contains(id)) {
             idList.add(id);
             Hawk.put("idList", idList);
-            Timber.e("Saved alarm ID in list: " + idList.toString());
+            Timber.i("Saved alarm ID in list: " + idList.toString());
         }
     }
 
@@ -52,7 +52,7 @@ public class Alarm {
         pendingIntent = getPendingIntent();
         alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        Timber.e("Set alarm intent: " + getPrettyTime());
+        Timber.i("Set alarm intent: " + getPrettyTime());
     }
 
     private PendingIntent getPendingIntent() {

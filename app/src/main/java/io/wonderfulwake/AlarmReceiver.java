@@ -10,7 +10,7 @@ import timber.log.Timber;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Timber.e("wake up mofo");
+        Timber.i("wake up mofo");
         Toast.makeText(context, "Alarm Triggered", Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
         i.setClassName("io.wonderfulwake", "io.wonderfulwake.Sunrise");
