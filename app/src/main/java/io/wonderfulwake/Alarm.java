@@ -10,6 +10,8 @@ import com.orhanobut.hawk.Hawk;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import timber.log.Timber;
@@ -48,15 +50,16 @@ public class Alarm {
         }
     }
 
-    private void setIntent() {
+    protected void setIntent() {
         pendingIntent = getPendingIntent();
         alarmManager = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, getCalendar().getTimeInMillis(), pendingIntent);
         Timber.i("Set alarm intent: " + getPrettyTime());
     }
 
     private PendingIntent getPendingIntent() {
         intent = new Intent(ctxt, AlarmReceiver.class);
+        intent.putExtra("id", object.id);
         return PendingIntent.getBroadcast(ctxt, Integer.parseInt(object.id), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
@@ -65,12 +68,18 @@ public class Alarm {
         calendar.set(Calendar.HOUR_OF_DAY, object.hour);
         calendar.set(Calendar.MINUTE, object.minute);
         calendar.set(Calendar.SECOND, object.second);
+        Date nowDate = new Date();
+        Calendar nowCal = GregorianCalendar.getInstance();
+        nowCal.setTime(nowDate);
+        if(calendar.before(nowCal)) {
+            calendar.add(Calendar.DATE, 1);
+        }
         return calendar;
     }
 
     String getPrettyTime() {
         Calendar calendar = getCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat sdf = new SimpleDateFormat("d M h:mm a");
         return sdf.format(calendar.getTime());
     }
 
