@@ -13,7 +13,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 import timber.log.Timber;
 
 public class Alarm {
@@ -28,8 +30,8 @@ public class Alarm {
         ctxt = context;
     }
 
-    static public Alarm build(Number hour, Number minute, Number second, Context context) {
-        AlarmObject ao = new AlarmObject(makeID(), hour.intValue(), minute.intValue(), second.intValue());
+    static public Alarm build(Number hour, Number minute, Number second, Context context, List<MaterialDayPicker.Weekday> days) {
+        AlarmObject ao = new AlarmObject(makeID(), hour.intValue(), minute.intValue(), second.intValue(), days);
         return new Alarm(ao, context);
     }
 
@@ -147,10 +149,15 @@ class AlarmObject {
     public int hour;
     public int minute;
     public int second;
-    public AlarmObject(String id, int hour, int minute, int second) {
+    public boolean enabled;
+    public List<MaterialDayPicker.Weekday> days;
+    public AlarmObject(String id, int hour, int minute, int second, List<MaterialDayPicker.Weekday> days) {
         this.id = id;
         this.hour = hour;
         this.minute = minute;
         this.second = second;
+        this.days = days;
     }
 }
+
+

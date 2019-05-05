@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             Thread.sleep(1000);
         } catch(InterruptedException ex) {
             Timber.i("Setting next alarm");
-            Hawk.init(context).setEncryption(new NoEncryption()).build();
+            //Hawk.init(context).setEncryption(new NoEncryption()).build();
             Bundle args = intent.getExtras();
             String id = (String) args.get("id");
             Alarm alarm = Alarm.find(id, context);
