@@ -14,7 +14,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
-import timber.log.Timber;
 
 public abstract class AlarmActivity extends AppCompatActivity {
 

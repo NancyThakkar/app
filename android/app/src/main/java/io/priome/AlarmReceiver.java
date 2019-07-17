@@ -5,13 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.orhanobut.hawk.Hawk;
-import com.orhanobut.hawk.NoEncryption;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import timber.log.Timber;
 
 public class AlarmReceiver extends BroadcastReceiver {
