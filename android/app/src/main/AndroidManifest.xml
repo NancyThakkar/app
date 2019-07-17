@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.priome">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,7 @@
         <activity android:name=".EditAlarm"></activity>
         <activity
             android:name=".NewAlarm"
-            android:label="@string/title_activity_new_alarm"
+            android:label="NewAlarm"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Sunrise"
@@ -20,8 +22,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,10 +30,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
         <receiver
             android:name=".AlarmReceiver"
-            android:process=":remote" />
+             />
     </application>
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 </manifest>
