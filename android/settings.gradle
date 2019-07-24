@@ -1,1 +1,5 @@
+rootProject.name = 'Priome'
+include ':react-native-native'
+project(':react-native-native').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-native/android')
+
 include ':app'

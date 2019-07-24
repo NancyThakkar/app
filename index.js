@@ -1,22 +1,10 @@
-import React from 'react';
-import { AppRegistry, StyleSheet } from 'react-native';
-import RootNav from 'navigations/RootNavigation';
-import { createAppContainer } from "react-navigation";
-// import { createStore } from 'redux';
-// import { Provider } from 'react-redux';
-// import reducers from './src/reducers';
-// const store = createStore(reducers);
+/**
+ * @format
+ * @lint-ignore-every XPLATJSCOPYRIGHT1
+ */
 
-const AppContainer = createAppContainer(RootNav);
+import {AppRegistry} from 'react-native';
+import App from './App';
+import {name as appName} from './app.json';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      // <Provider store={store}>
-        <AppContainer />
-      // </Provider>
-    );
-  }
-}
-
-AppRegistry.registerComponent('App', () => App);
+AppRegistry.registerComponent(appName, () => App);
