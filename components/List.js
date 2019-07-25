@@ -32,28 +32,19 @@ export default class Myproject extends Component {
 
     handleDatePicked = date => {
         console.log("A date has been picked: ", date);
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var hours = new Date().getHours();
+        var minutes = new Date().getMinutes();
+        {this.array.push({title : date + '-' + month + '-' + year+ ' ' + hours + ':' + minutes});this.setState({ arrayHolder: [...this.array] })}
         this.hideDateTimePicker();
-        {data => this.setState({ textInput_Holder: date })}
-        {this.joinData}
     };
 
 
     render() {
         return (
             <View style={styles.MainContainers}>
-
-                <TextInput
-                    placeholder="Enter Value Here"
-                    onChangeText={data => this.setState({ textInput_Holder: data })}
-                    style={styles.textInputStyle}
-                    underlineColorAndroid='transparent'
-                />
-
-                <TouchableOpacity onPress={this.joinData} activeOpacity={0.7} style={styles.button} >
-
-                    <Text style={styles.buttonText}> Add Values To FlatList </Text>
-
-                </TouchableOpacity>
 
                 <FlatList
                     data={this.state.arrayHolder}
@@ -66,7 +57,8 @@ export default class Myproject extends Component {
                 <DateTimePicker
                     mode='time'
                     isVisible={this.state.isDateTimePickerVisible}
-                    onConfirm={this.handleDatePicked}
+                    onConfirm= {this.handleDatePicked}
+                  //  onConfirm={this.handleDatePicked}
                     onCancel={this.hideDateTimePicker}
                 />
                 <TouchableOpacity activeOpacity={0.5} onPress={this.showDateTimePicker} style={styles.TouchableOpacityStyle} >
@@ -161,7 +153,6 @@ const styles = StyleSheet.create({
     },
 
     FloatingButtonStyle: {
-
         resizeMode: 'contain',
         width: 50,
         height: 50,
