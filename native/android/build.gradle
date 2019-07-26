@@ -32,5 +32,8 @@ repositories {
 
 dependencies {
   compile 'com.facebook.react:react-native:+'
+    implementation 'com.orhanobut:hawk:2.0.1'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'ca.antonious:materialdaypicker:0.4.0'
 }
   

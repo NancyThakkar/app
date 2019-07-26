@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {StyleSheet, FlatList, Text, View, Alert, TouchableOpacity, TextInput, Image} from 'react-native';
 import DateTimePicker from "react-native-modal-datetime-picker";
+import ToastExample from '../ToastExample';
 
 export default class Myproject extends Component {
 
@@ -29,23 +30,25 @@ export default class Myproject extends Component {
     hideDateTimePicker = () => {
         this.setState({ isDateTimePickerVisible: false });
     };
-
     handleDatePicked = date => {
         console.log("A date has been picked: ", date);
-        var date = new Date().getDate();
-        var month = new Date().getMonth() + 1;
-        var year = new Date().getFullYear();
-        var hours = new Date().getHours();
-        var minutes = new Date().getMinutes();
-        {this.array.push({title : date + '-' + month + '-' + year+ ' ' + hours + ':' + minutes});this.setState({ arrayHolder: [...this.array] })}
+       // ToastExample.show(date.getDay()+""+date.getMonth()+date.getHours()+""+date.getMinutes(),ToastExample.SHORT);
         this.hideDateTimePicker();
+        var dat = new Date();
+        var month=dat.getMonth()+1;
+        dat=date;
+        {this.array.push({title : dat.getDate() + '-' + month+ '-' + dat.getFullYear()+ ' ' + dat.getHours() + ':' + dat.getMinutes()});this.setState({ arrayHolder: [...this.array] })}
+        this.hideDateTimePicker();
+        ToastExample.returnArrayOfObjects(array => {
+            console.log(array, "The array you sent from the native side");
+            ToastExample.show(array[0],ToastExample.SHORT);
+        });
     };
 
 
     render() {
         return (
             <View style={styles.MainContainers}>
-
                 <FlatList
                     data={this.state.arrayHolder}
                     width='100%'
@@ -58,7 +61,6 @@ export default class Myproject extends Component {
                     mode='time'
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm= {this.handleDatePicked}
-                  //  onConfirm={this.handleDatePicked}
                     onCancel={this.hideDateTimePicker}
                 />
                 <TouchableOpacity activeOpacity={0.5} onPress={this.showDateTimePicker} style={styles.TouchableOpacityStyle} >
