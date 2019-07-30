@@ -4,7 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 
 import java.text.SimpleDateFormat;
@@ -44,11 +46,13 @@ public class Alarm {
         String id = object.id;
         Hawk.put(id, object);
         Timber.i("Saved alarm object: " + object.toString());
+        Log.e("Saved alarm object: ","sj"+object.toString());
         ArrayList<String> idList = Alarm.getAllIDs();
         if(!idList.contains(id)) {
             idList.add(id);
             Hawk.put("idList", idList);
             Timber.i("Saved alarm ID in list: " + idList.toString());
+            Log.e("Saved alarm object: ","sj"+idList.toString());
         }
     }
 
@@ -99,6 +103,7 @@ public class Alarm {
             Alarm alarm = new Alarm(alarmObject, context);
             alarmList.add(alarm);
         }
+        Log.e("Saved alarm object: ","sj"+new Gson().toJson(alarmList));
         return alarmList;
     }
 

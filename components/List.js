@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {StyleSheet, FlatList, Text, View, Alert, TouchableOpacity, TextInput, Image} from 'react-native';
+import {StyleSheet, FlatList, Text, View, Alert, TouchableOpacity, TextInput, Image,ToolbarAndroid} from 'react-native';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import ToastExample from '../ToastExample';
 
@@ -14,6 +14,12 @@ export default class Myproject extends Component {
         };
         this.array = [],
             this.state = {arrayHolder: [], textInput_Holder: ''}
+        ToastExample.returnArrayOfObjects(array => {
+            console.log(array, "The array you sent from the native side");
+            for(let i=0;i<array.length;i++){
+                {this.array.push({title : /*dat.getDate() + '-' + month+ '-' + dat.getFullYear()+ ' ' +*/ array[i].hour + ':' + array[i].minute});this.setState({ arrayHolder: [...this.array] })}
+            }
+        });
     }
 
     SampleFunction=()=>{
@@ -37,11 +43,17 @@ export default class Myproject extends Component {
         var dat = new Date();
         var month=dat.getMonth()+1;
         dat=date;
-        {this.array.push({title : dat.getDate() + '-' + month+ '-' + dat.getFullYear()+ ' ' + dat.getHours() + ':' + dat.getMinutes()});this.setState({ arrayHolder: [...this.array] })}
+        //{this.array.push({title : dat.getDate() + '-' + month+ '-' + dat.getFullYear()+ ' ' + dat.getHours() + ':' + dat.getMinutes()});this.setState({ arrayHolder: [...this.array] })}
         this.hideDateTimePicker();
+        ToastExample.saveAlarm(dat.getHours(),dat.getMinutes(),0);
+        this.array=[]
+        this.setState({ arrayHolder: [...this.array] })
         ToastExample.returnArrayOfObjects(array => {
             console.log(array, "The array you sent from the native side");
-            ToastExample.show(array[0],ToastExample.SHORT);
+            for(let i=0;i<array.length;i++){
+                {this.array.push({title : /*dat.getDate() + '-' + month+ '-' + dat.getFullYear()+ ' ' +*/ array[i].hour + ':' + array[i].minute});this.setState({ arrayHolder: [...this.array] })}
+          //  ToastExample.show("sunil"+array[i].hour,ToastExample.SHORT);
+            }
         });
     };
 
@@ -49,6 +61,11 @@ export default class Myproject extends Component {
     render() {
         return (
             <View style={styles.MainContainers}>
+                <ToolbarAndroid
+                    style={styles.toolbar}
+                    title="Priome"
+                    titleColor= "white"
+                />
                 <FlatList
                     data={this.state.arrayHolder}
                     width='100%'
@@ -70,9 +87,9 @@ export default class Myproject extends Component {
                            style={styles.FloatingButtonStyle} />
 
                 </TouchableOpacity>
-            </View>
 
-        );
+            </View>
+    );
     }
 
 
@@ -98,13 +115,16 @@ export default class Myproject extends Component {
 }
 
 const styles = StyleSheet.create({
-
+    toolbar: {
+        backgroundColor: '#2196F3',
+        height: 56,
+        alignSelf: 'stretch',
+        textAlign: 'center',
+    },
     MainContainers: {
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        margin: 2
-
     },
 
     item: {
