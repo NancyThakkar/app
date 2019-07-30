@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import List from "./components/List";
-export default class App extends Component<{}> {
+import {createStackNavigator, createAppContainer} from 'react-navigation';
+import List from './components/List'
+import SecondPage from './components/SecondPage'
 
-    render() {
+const MainNavigator = createStackNavigator({
+    List: {screen: List},
+    SecondPage: {screen: SecondPage},
+});
 
-        return (
-            <List/>
-        );
-    }
-}
+const App = createAppContainer(MainNavigator);
 
+export default App;

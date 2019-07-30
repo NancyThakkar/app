@@ -4,8 +4,18 @@ import {StyleSheet, FlatList, Text, View, Alert, TouchableOpacity, TextInput, Im
 import DateTimePicker from "react-native-modal-datetime-picker";
 import ToastExample from '../ToastExample';
 
-export default class Myproject extends Component {
+export default class List extends Component {
 
+    static navigationOptions = {
+        title: 'Priome',
+        headerTintColor: "white",
+        headerStyle: {
+            backgroundColor:"blue"
+        },
+        headerTitleStyle: {
+            fontSize: 18
+        }
+    };
 
     constructor(props) {
         super(props);
@@ -61,18 +71,13 @@ export default class Myproject extends Component {
     render() {
         return (
             <View style={styles.MainContainers}>
-                <ToolbarAndroid
-                    style={styles.toolbar}
-                    title="Priome"
-                    titleColor= "white"
-                />
                 <FlatList
                     data={this.state.arrayHolder}
                     width='100%'
                     extraData={this.state.arrayHolder}
                     keyExtractor={(index) => index.toString()}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
-                    renderItem={({ item }) => <Text style={styles.item} onPress={this.GetItem.bind(this, item.title)} > {item.title} </Text>}
+                    renderItem={({ item }) => <Text style={styles.item}   onPress={() => this.props.navigation.navigate('SecondPage')}   > {item.title} </Text>}
                 />
                 <DateTimePicker
                     mode='time'
