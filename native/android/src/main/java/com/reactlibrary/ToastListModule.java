@@ -148,4 +148,26 @@ public class ToastListModule extends ReactContextBaseJavaModule {
               alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (5 * 1000), pendingIntent);
               Toast.makeText(getReactApplicationContext(), "Alarm set to after " + 5 + " seconds",Toast.LENGTH_LONG).show();*/
   }
+
+
+
+  @ReactMethod
+  void delete(String id) {
+        if(Hawk.contains(id)) {
+        AlarmObject alarmObject = Hawk.get(id);
+        alarmObject.id=id;
+        Alarm alarm= new Alarm(alarmObject, getReactApplicationContext());
+        alarm.object.id=id;
+
+        ArrayList alarmIDs = Alarm.getAllIDs();
+        if(alarmIDs.contains(id)) {
+            alarmIDs.remove(id);
+            Hawk.put("idList", alarmIDs);
+        }
+        if(Hawk.contains(id)) {
+            Hawk.delete(id);
+        }
+        PendingIntent pendingIntent = alarm.getPendingIntent();
+        pendingIntent.cancel();
+    }}
 }

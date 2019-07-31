@@ -63,7 +63,7 @@ public class Alarm {
         Timber.i("Set alarm intent: " + getPrettyTime());
     }
 
-    private PendingIntent getPendingIntent() {
+    public PendingIntent getPendingIntent() {
         intent = new Intent(ctxt, AlarmReceiver.class);
         intent.putExtra("id", object.id);
         return PendingIntent.getBroadcast(ctxt, Integer.parseInt(object.id), intent, PendingIntent.FLAG_UPDATE_CURRENT);

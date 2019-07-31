@@ -1,10 +1,10 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import List from './components/List'
-import SecondPage from './components/SecondPage'
+import EditDelete from './components/EditDelete'
 
 const MainNavigator = createStackNavigator({
     List: {screen: List},
-    SecondPage: {screen: SecondPage},
+    EditDelete: {screen: EditDelete},
 });
 
 const App = createAppContainer(MainNavigator);
