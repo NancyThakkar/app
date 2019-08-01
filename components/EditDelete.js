@@ -1,9 +1,10 @@
 //This is an example code for Navigator//
 import React, { Component } from 'react';
 //import react in our code.
-import { StyleSheet, View, Text,Button} from 'react-native';
+import { StyleSheet, View, Text,Button,TouchableOpacity} from 'react-native';
 //import all the components we are going to use.
 import ToastExample from '../ToastExample';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 export default class EditDelete extends Component {
     static navigationOptions = {
@@ -18,30 +19,68 @@ export default class EditDelete extends Component {
     };
     constructor(props) {
         super(props)
-
         this.state = {
-            item: this.props.navigation.state.params.item
+            isDateTimePickerVisible: false,
+            timePickerModeAndroid:'spinner',
+            item: this.props.navigation.state.params.item,
+            hour:'',
+            minute:'',
+            id:'',
 
         };
     }
+
+
     displayMessage(message) {
           ToastExample.delete(message);
         { this.props.navigation.replace('List')}
     }
+
+    showDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: true });
+    };
+
+    hideDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: false });
+    };
+    handleDatePicked = date => {
+        console.log("A date has been picked: ", date);
+        this.hideDateTimePicker();
+        var dat = new Date();
+        dat=date;
+        this.state.hour=dat.getHours();
+        this.state.minute=dat.getMinutes();
+       // ToastExample.show(""+dat.getHours()+""+dat.getMinutes(),ToastExample.SHORT);
+        ToastExample.updateAlarm(this.state.id,dat.getHours(),dat.getMinutes(),0);
+        {this.props.navigation.replace('List')}
+    };
     render() {
 /*        const navigate  = this.props.navigation;
         const item = navigate.getParam('item', 'item');*/
         var str=this.state.item.title;
         var id=str.split(" ")[1];
+        this.state.id=id;
+        var time=str.split(" ")[0];
         return (
             <View style={styles.container}>
-            <Text>{str}</Text>
-                <Button
-                    value={id}
-                    onPress={this.displayMessage.bind(this, ""+id)}
-                    title="Delete"
-                    color="#841584"
+            <Text style={styles.item}>{time}</Text>
+                <DateTimePicker
+                    timePickerModeAndroid={this.state.timePickerModeAndroid}
+                    mode='time'
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm= {this.handleDatePicked}
+                    onCancel={this.hideDateTimePicker}
                 />
+                <TouchableOpacity activeOpacity={0.5} onPress={this.showDateTimePicker} style={styles.button} >
+                    <Text style = {styles.buttonText}>
+                        Edit
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.5} onPress={this.displayMessage.bind(this, ""+id)} style={styles.button} >
+                    <Text style = {styles.buttonText}>
+                        Delete
+                    </Text>
+                </TouchableOpacity>
             </View>
     );
     }
@@ -52,5 +91,31 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+    }, item: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+    },
+    button: {
+        width: '40%',
+        height: 40,
+        padding: 10,
+        backgroundColor: '#90A4AE',
+        borderRadius: 8,
+        margin: 10
+    },
+        TouchableOpacityStyle:{
+
+        position: 'absolute',
+        width: 50,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        right: 30,
+        bottom: 30,
+    },
+    buttonText: {
+        color: '#fff',
+        textAlign: 'center',
     },
 });

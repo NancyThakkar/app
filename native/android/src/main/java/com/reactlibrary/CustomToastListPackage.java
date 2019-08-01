@@ -25,7 +25,7 @@ public class CustomToastListPackage implements ReactPackage {
             ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
-        modules.add(new ToastListModule(reactContext));
+        modules.add(new AlarmListModule(reactContext));
 
         return modules;
     }

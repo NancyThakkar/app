@@ -36,13 +36,13 @@ import java.util.HashMap;
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 import timber.log.Timber;
 
-public class ToastListModule extends ReactContextBaseJavaModule {
+public class AlarmListModule extends ReactContextBaseJavaModule {
 
     private static final String DURATION_SHORT_KEY = "SHORT";
     private static final String DURATION_LONG_KEY = "LONG";
 
     //constructor
-    public ToastListModule(ReactApplicationContext reactContext) {
+    public AlarmListModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
 
@@ -140,15 +140,20 @@ public class ToastListModule extends ReactContextBaseJavaModule {
       alarm.object.minute =(int)  minute;
       alarm.object.second = 0;
       alarm.save();
-
- /*      Intent intent = new Intent(getReactApplicationContext(), AlarmReceiver.class);
-              PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                      getReactApplicationContext().getApplicationContext(), 234, intent, 0);
-              AlarmManager alarmManager = (AlarmManager)getReactApplicationContext(). getSystemService(Context.ALARM_SERVICE);
-              alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (5 * 1000), pendingIntent);
-              Toast.makeText(getReactApplicationContext(), "Alarm set to after " + 5 + " seconds",Toast.LENGTH_LONG).show();*/
   }
 
+  @ReactMethod
+  public void updateAlarm(String id,int hour, int minute, int second) {
+      Hawk.init(getReactApplicationContext()).setEncryption(new NoEncryption()).build();
+      List<MaterialDayPicker.Weekday> days = new ArrayList<>();
+      Alarm alarm=Alarm.build(hour, minute, second, getReactApplicationContext(), days);
+      alarm.object.hour = (int) hour;
+      alarm.object.id = (String) id;
+      alarm.object.minute =(int)  minute;
+      alarm.object.second = 0;
+      Hawk.put(id, alarm.object);
+       alarm.save();
+ }
 
 
   @ReactMethod

@@ -20,7 +20,8 @@ export default class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDateTimePickerVisible: false
+            isDateTimePickerVisible: false,
+            timePickerModeAndroid:'spinner',
         };
         this.state = {
             item: '',
@@ -86,6 +87,7 @@ export default class List extends Component {
                 />
                 <DateTimePicker
                     mode='time'
+                    timePickerModeAndroid={this.state.timePickerModeAndroid}
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm= {this.handleDatePicked}
                     onCancel={this.hideDateTimePicker}
