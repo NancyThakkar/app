@@ -5,6 +5,7 @@ import { StyleSheet, View, Text,Button,TouchableOpacity} from 'react-native';
 //import all the components we are going to use.
 import ToastExample from '../ToastExample';
 import DateTimePicker from "react-native-modal-datetime-picker";
+import WeekdayPicker from './WeekdayPicker';
 
 export default class EditDelete extends Component {
     static navigationOptions = {
@@ -42,7 +43,11 @@ export default class EditDelete extends Component {
 
     hideDateTimePicker = () => {
         this.setState({ isDateTimePickerVisible: false });
-    };
+    }
+    handleChange = (days) => {
+        ToastExample.show("sunil"+days.getDay(),ToastExample.SHORT);
+        this.setState(days)
+    }
     handleDatePicked = date => {
         console.log("A date has been picked: ", date);
         this.hideDateTimePicker();
@@ -61,6 +66,7 @@ export default class EditDelete extends Component {
         var id=str.split(" ")[1];
         this.state.id=id;
         var time=str.split(" ")[0];
+        let days = { 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
         return (
             <View style={styles.container}>
             <Text style={styles.item}>{time}</Text>
@@ -70,6 +76,10 @@ export default class EditDelete extends Component {
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm= {this.handleDatePicked}
                     onCancel={this.hideDateTimePicker}
+                />
+                <WeekdayPicker
+                    days={days}
+                    onChange={this.handleChange}
                 />
                 <TouchableOpacity activeOpacity={0.5} onPress={this.showDateTimePicker} style={styles.button} >
                     <Text style = {styles.buttonText}>
