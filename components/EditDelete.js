@@ -1,7 +1,7 @@
 //This is an example code for Navigator//
 import React, { Component } from 'react';
 //import react in our code.
-import { StyleSheet, View, Text,Button,TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Text,Button,TouchableOpacity,BackHandler} from 'react-native';
 //import all the components we are going to use.
 import ToastExample from '../ToastExample';
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -20,6 +20,7 @@ export default class EditDelete extends Component {
     };
     constructor(props) {
         super(props)
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
         this.state = {
             isDateTimePickerVisible: false,
             timePickerModeAndroid:'spinner',
@@ -32,6 +33,19 @@ export default class EditDelete extends Component {
         };
     }
 
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    handleBackButtonClick() {
+       // this.props.navigation.goBack(null);
+        { this.props.navigation.replace('List')};
+        return true;
+    }
 
     displayMessage(message) {
           ToastExample.delete(message);
