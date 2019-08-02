@@ -10,7 +10,7 @@ export default class List extends Component {
         title: 'Priome',
         headerTintColor: "white",
         headerStyle: {
-            backgroundColor:"blue"
+            backgroundColor:"#008577"
         },
         headerTitleStyle: {
             fontSize: 18
