@@ -27,6 +27,7 @@ export default class EditDelete extends Component {
             hour:'',
             minute:'',
             id:'',
+            days:{ 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 },
 
         };
     }
@@ -45,7 +46,8 @@ export default class EditDelete extends Component {
         this.setState({ isDateTimePickerVisible: false });
     }
     handleChange = (days) => {
-        ToastExample.show("sunil"+days.getDay(),ToastExample.SHORT);
+        //ToastExample.show("sunil"+days.getDay(),ToastExample.SHORT);
+        this.state.days=days;
         this.setState(days)
     }
     handleDatePicked = date => {
@@ -78,7 +80,7 @@ export default class EditDelete extends Component {
                     onCancel={this.hideDateTimePicker}
                 />
                 <WeekdayPicker
-                    days={days}
+                    days={this.state.days}
                     onChange={this.handleChange}
                 />
                 <TouchableOpacity activeOpacity={0.5} onPress={this.showDateTimePicker} style={styles.button} >

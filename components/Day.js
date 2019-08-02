@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2ed15e'
   },
   inactive: {
-    backgroundColor: '#90A4AE'
+
   },
   activeText: {
     color: '#ffffff'
