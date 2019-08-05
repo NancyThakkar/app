@@ -72,16 +72,16 @@ export default class EditDelete extends Component {
         this.state.hour=dat.getHours();
         this.state.minute=dat.getMinutes();
        // ToastExample.show(""+dat.getHours()+""+dat.getMinutes(),ToastExample.SHORT);
-        ToastExample.updateAlarm(this.state.id,dat.getHours(),dat.getMinutes(),0);
+        ToastExample.updateAlarm(this.state.id,dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0);
         {this.props.navigation.replace('List')}
     };
     render() {
 /*        const navigate  = this.props.navigation;
         const item = navigate.getParam('item', 'item');*/
         var str=this.state.item.title;
-        var id=str.split(" ")[1];
+        var id=str.split(" ")[3];
         this.state.id=id;
-        var time=str.split(" ")[0];
+        var time=str.split(" ")[2];
         let days = { 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
         return (
             <View style={styles.container}>

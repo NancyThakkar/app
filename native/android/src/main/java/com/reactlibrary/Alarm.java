@@ -32,8 +32,8 @@ public class Alarm {
         ctxt = context;
     }
 
-    static public Alarm build(Number hour, Number minute, Number second, Context context, List<MaterialDayPicker.Weekday> days) {
-        AlarmObject ao = new AlarmObject(makeID(), hour.intValue(), minute.intValue(), second.intValue(), days);
+    static public Alarm build(Number date, Number month,Number hour, Number minute, Number second, Context context, List<MaterialDayPicker.Weekday> days) {
+        AlarmObject ao = new AlarmObject(makeID(), date.intValue(), month.intValue(),  hour.intValue(), minute.intValue(), second.intValue(), days);
         return new Alarm(ao, context);
     }
 
@@ -154,12 +154,16 @@ class AlarmObject {
     public int hour;
     public int minute;
     public int second;
+    public int date;
+    public int month;
     public boolean enabled;
     public List<MaterialDayPicker.Weekday> days;
-    public AlarmObject(String id, int hour, int minute, int second, List<MaterialDayPicker.Weekday> days) {
+    public AlarmObject(String id, int date, int month, int hour, int minute, int second, List<MaterialDayPicker.Weekday> days) {
         this.id = id;
         this.hour = hour;
         this.minute = minute;
+        this.date = date;
+        this.month = month;
         this.second = second;
         this.days = days;
     }

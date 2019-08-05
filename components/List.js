@@ -32,15 +32,13 @@ export default class List extends Component {
         ToastExample.returnArrayOfObjects(array => {
             console.log(array, "The array you sent from the native side");
             for(let i=0;i<array.length;i++){
-                {this.array.push({title : array[i].hour + ':' +array[i].minute+' ' +array[i].id});this.setState({ arrayHolder: [...this.array] })}
+                {this.array.push({title :array[i].date +" "+ array[i].month+" "+array[i].hour + ':'+ array[i].minute+"          "+array[i].id});this.setState({ arrayHolder: [...this.array] })}
             }
         });
     }
 
     SampleFunction=()=>{
-
         Alert.alert("Floating Button Clicked");
-
     }
 
 
@@ -59,14 +57,14 @@ export default class List extends Component {
         var month=dat.getMonth()+1;
         dat=date;
         this.hideDateTimePicker();
-        ToastExample.saveAlarm(dat.getHours(),dat.getMinutes(),0);
+        ToastExample.saveAlarm(dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0);
         this.array=[]
         this.setState({ arrayHolder: [...this.array] })
         ToastExample.returnArrayOfObjects(array => {
             console.log(array, "The array you sent from the native side");
             for(let i=0;i<array.length;i++){
-                {this.array.push({title :array[i].hour + ':'+ array[i].minute+" "+array[i].id});this.setState({ arrayHolder: [...this.array] })}
-          //  ToastExample.show("sunil"+array[i].hour,ToastExample.SHORT);
+                {this.array.push({title :array[i].date +" "+ array[i].month+" "+array[i].hour + ':'+ array[i].minute+"          "+array[i].id});this.setState({ arrayHolder: [...this.array] })}
+            ToastExample.show("sunil"+array[i].date + array[i].month,ToastExample.SHORT);
             }
         });
     };

@@ -132,10 +132,12 @@ public class AlarmListModule extends ReactContextBaseJavaModule {
     successCallback.invoke(array);
   }
   @ReactMethod
-  public void saveAlarm(int hour, int minute, int second) {
+  public void saveAlarm(int date, int month,int hour, int minute, int second) {
       Hawk.init(getReactApplicationContext()).setEncryption(new NoEncryption()).build();
       List<MaterialDayPicker.Weekday> days = new ArrayList<>();
-      Alarm alarm=Alarm.build(hour, minute, second, getReactApplicationContext(), days);
+      Alarm alarm=Alarm.build(date,month,hour, minute, second, getReactApplicationContext(), days);
+      alarm.object.date = (int) date;
+      alarm.object.month = (int) month;
       alarm.object.hour = (int) hour;
       alarm.object.minute =(int)  minute;
       alarm.object.second = 0;
@@ -143,10 +145,10 @@ public class AlarmListModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void updateAlarm(String id,int hour, int minute, int second) {
+  public void updateAlarm(String id,int date, int month,int hour, int minute, int second) {
       Hawk.init(getReactApplicationContext()).setEncryption(new NoEncryption()).build();
       List<MaterialDayPicker.Weekday> days = new ArrayList<>();
-      Alarm alarm=Alarm.build(hour, minute, second, getReactApplicationContext(), days);
+      Alarm alarm=Alarm.build(date,month,hour, minute, second, getReactApplicationContext(), days);
       alarm.object.hour = (int) hour;
       alarm.object.id = (String) id;
       alarm.object.minute =(int)  minute;
