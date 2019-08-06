@@ -79,7 +79,7 @@ export default class EditDelete extends Component {
 /*        const navigate  = this.props.navigation;
         const item = navigate.getParam('item', 'item');*/
         var str=this.state.item.title;
-        var id=str.split(" ")[3];
+        var id=str.split("          ")[1];
         this.state.id=id;
         var time=str.split(" ")[2];
         let days = { 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
