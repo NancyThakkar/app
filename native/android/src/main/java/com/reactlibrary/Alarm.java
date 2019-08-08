@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -157,6 +158,15 @@ class AlarmObject {
     public int date;
     public int month;
     public boolean enabled;
+    public int Sun=0;
+    public int Mon=0;
+    public int Tue=0;
+    public int Wed=0;
+    public int Th=0;
+    public int Fr=0;
+    public int Sat=0;
+    public HashMap<String,Object> readableMap;
+    public String readableMaps;
     public List<MaterialDayPicker.Weekday> days;
     public AlarmObject(String id, int date, int month, int hour, int minute, int second, List<MaterialDayPicker.Weekday> days) {
         this.id = id;

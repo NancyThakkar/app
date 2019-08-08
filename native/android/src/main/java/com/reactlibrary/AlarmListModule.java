@@ -16,6 +16,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
@@ -122,17 +123,12 @@ public class AlarmListModule extends ReactContextBaseJavaModule {
               array.pushMap(wm);
         Log.e("idList",new Gson().toJson(alarmObject));
     }
-  /*    ArrayList<Alarm> alarms = Alarm.getAll(getReactApplicationContext());
-      for (Alarm co : alarms) {
-      JSONObject jo = new JSONObject(g.toJson(co));
-      WritableMap wm = convertJsonToMap(jo);
-      array.pushMap(wm);
-    }*/
+
 
     successCallback.invoke(array);
   }
   @ReactMethod
-  public void saveAlarm(int date, int month,int hour, int minute, int second) {
+  public void saveAlarm(int date, int month, int hour, int minute, int second, ReadableMap readableMap) {
       Hawk.init(getReactApplicationContext()).setEncryption(new NoEncryption()).build();
       List<MaterialDayPicker.Weekday> days = new ArrayList<>();
       Alarm alarm=Alarm.build(date,month,hour, minute, second, getReactApplicationContext(), days);
@@ -141,11 +137,18 @@ public class AlarmListModule extends ReactContextBaseJavaModule {
       alarm.object.hour = (int) hour;
       alarm.object.minute =(int)  minute;
       alarm.object.second = 0;
+      alarm.object.Sun=readableMap.getInt("0");
+      alarm.object.Mon=readableMap.getInt("1");
+      alarm.object.Tue=readableMap.getInt("2");
+      alarm.object.Wed=readableMap.getInt("3");
+      alarm.object.Tue=readableMap.getInt("4");
+      alarm.object.Fr=readableMap.getInt("5");
+      alarm.object.Sat=readableMap.getInt("6");
       alarm.save();
   }
 
   @ReactMethod
-  public void updateAlarm(String id,int date, int month,int hour, int minute, int second) {
+  public void updateAlarm(String id,int date, int month,int hour, int minute, int second,ReadableMap readableMap) {
       Hawk.init(getReactApplicationContext()).setEncryption(new NoEncryption()).build();
       List<MaterialDayPicker.Weekday> days = new ArrayList<>();
       Alarm alarm=Alarm.build(date,month,hour, minute, second, getReactApplicationContext(), days);
@@ -153,6 +156,13 @@ public class AlarmListModule extends ReactContextBaseJavaModule {
       alarm.object.id = (String) id;
       alarm.object.minute =(int)  minute;
       alarm.object.second = 0;
+      alarm.object.Sun=readableMap.getInt("0");
+      alarm.object.Mon=readableMap.getInt("1");
+      alarm.object.Tue=readableMap.getInt("2");
+      alarm.object.Wed=readableMap.getInt("3");
+      alarm.object.Tue=readableMap.getInt("4");
+      alarm.object.Fr=readableMap.getInt("5");
+      alarm.object.Sat=readableMap.getInt("6");
       Hawk.put(id, alarm.object);
        alarm.save();
  }

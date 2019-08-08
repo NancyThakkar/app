@@ -25,11 +25,14 @@ export default class List extends Component {
         };
         this.state = {
             item: '',
+            index:0,
+            arraydays:[],
         };
         this.array = [],
             this.state = {arrayHolder: [], textInput_Holder: ''}
 
         ToastExample.returnArrayOfObjects(array => {
+            this.state.arraydays=array;
             console.log(array, "The array you sent from the native side");
             for(let i=0;i<array.length;i++){
                 {this.array.push({title :array[i].date +" "+ array[i].month+" "+array[i].hour + ':'+ array[i].minute+"          "+array[i].id});this.setState({ arrayHolder: [...this.array] })}
@@ -49,6 +52,19 @@ export default class List extends Component {
     hideDateTimePicker = () => {
         this.setState({ isDateTimePickerVisible: false });
     };
+
+    ListClick (index,item) {
+        let dayss={ 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
+        dayss[0]=this.state.arraydays[index].Sun;
+        dayss[1]=this.state.arraydays[index].Mon;
+        dayss[2]=this.state.arraydays[index].Tue;
+        dayss[3]=this.state.arraydays[index].Wed;
+        dayss[4]=this.state.arraydays[index].Th;
+        dayss[5]=this.state.arraydays[index].Fr;
+        dayss[6]=this.state.arraydays[index].Sat;
+        ToastExample.show(dayss["1"].toString()+"sunil"+dayss["0"].toString()+this.state.arraydays[index].Sun,ToastExample.SHORT);
+        this.props.navigation.replace('EditDelete',{'item': item,'dayss':dayss,})
+    };
     handleDatePicked = date => {
         console.log("A date has been picked: ", date);
        // ToastExample.show(date.getDay()+""+date.getMonth()+date.getHours()+""+date.getMinutes(),ToastExample.SHORT);
@@ -57,14 +73,15 @@ export default class List extends Component {
         var month=dat.getMonth()+1;
         dat=date;
         this.hideDateTimePicker();
-        ToastExample.saveAlarm(dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0);
+        let days={ 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
+        ToastExample.saveAlarm(dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0,days);
         this.array=[]
         this.setState({ arrayHolder: [...this.array] })
         ToastExample.returnArrayOfObjects(array => {
+            this.state.arraydays=array;
             console.log(array, "The array you sent from the native side");
             for(let i=0;i<array.length;i++){
                 {this.array.push({title :array[i].date +" "+ array[i].month+" "+array[i].hour + ':'+ array[i].minute+"          "+array[i].id});this.setState({ arrayHolder: [...this.array] })}
-            ToastExample.show("sunil"+array[i].date + array[i].month,ToastExample.SHORT);
             }
         });
     };
@@ -79,8 +96,7 @@ export default class List extends Component {
                     extraData={this.state.arrayHolder}
                     keyExtractor={(index) => index.toString()}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
-                    renderItem={({ item }) => <Text style={styles.item}   onPress={() =>
-                        this.props.navigation.replace('EditDelete',{'item': item,})} > {item.title} </Text>
+                    renderItem={({ item,index }) => <Text style={styles.item}   onPress={this.ListClick.bind(this, index,item)} > {item.title} </Text>
                     }
                 />
                 <DateTimePicker

@@ -28,7 +28,7 @@ export default class EditDelete extends Component {
             hour:'',
             minute:'',
             id:'',
-            days:{ 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 },
+            days:this.props.navigation.state.params.dayss,
 
         };
     }
@@ -60,7 +60,7 @@ export default class EditDelete extends Component {
         this.setState({ isDateTimePickerVisible: false });
     }
     handleChange = (days) => {
-        //ToastExample.show("sunil"+days.getDay(),ToastExample.SHORT);
+        //ToastExample.show("sunil"+days("0"),ToastExample.SHORT);
         this.state.days=days;
         this.setState(days)
     }
@@ -72,7 +72,7 @@ export default class EditDelete extends Component {
         this.state.hour=dat.getHours();
         this.state.minute=dat.getMinutes();
        // ToastExample.show(""+dat.getHours()+""+dat.getMinutes(),ToastExample.SHORT);
-        ToastExample.updateAlarm(this.state.id,dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0);
+        ToastExample.updateAlarm(this.state.id,dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0,this.state.days);
         {this.props.navigation.replace('List')}
     };
     render() {
