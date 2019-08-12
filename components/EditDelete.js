@@ -6,6 +6,7 @@ import { StyleSheet, View, Text,Button,TouchableOpacity,BackHandler} from 'react
 import ToastExample from '../ToastExample';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import WeekdayPicker from './WeekdayPicker';
+import { TimePicker, DatePicker } from 'react-native-wheel-picker-android';
 
 export default class EditDelete extends Component {
     static navigationOptions = {
@@ -22,14 +23,13 @@ export default class EditDelete extends Component {
         super(props)
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
         this.state = {
-            isDateTimePickerVisible: false,
-            timePickerModeAndroid:'spinner',
-            item: this.props.navigation.state.params.item,
+            isDateTimePickerVisible: true,
+            timePickerModeAndroid: 'spinner',
             hour:'',
             minute:'',
             id:'',
+            item: this.props.navigation.state.params.item,
             days:this.props.navigation.state.params.dayss,
-
         };
     }
 
@@ -65,16 +65,17 @@ export default class EditDelete extends Component {
         this.setState(days)
     }
     handleDatePicked = date => {
-        console.log("A date has been picked: ", date);
-        this.hideDateTimePicker();
         var dat = new Date();
-        dat=date;
+        var month = dat.getMonth() + 1;
+        dat = date;
         this.state.hour=dat.getHours();
         this.state.minute=dat.getMinutes();
-       // ToastExample.show(""+dat.getHours()+""+dat.getMinutes(),ToastExample.SHORT);
-        ToastExample.updateAlarm(this.state.id,dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0,this.state.days);
-        {this.props.navigation.replace('List')}
     };
+    EditAlarm = () => {
+        var dat = new Date();
+        ToastExample.updateAlarm(this.state.id,dat.getDate(),dat.getMonth()+1,this.state.hour,this.state.minute,0,this.state.days);
+        {this.props.navigation.replace('List')}
+    }
     render() {
 /*        const navigate  = this.props.navigation;
         const item = navigate.getParam('item', 'item');*/
@@ -85,21 +86,16 @@ export default class EditDelete extends Component {
         let days = { 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
         return (
             <View style={styles.container}>
-            <Text style={styles.item}>{time}</Text>
-                <DateTimePicker
-                    timePickerModeAndroid={this.state.timePickerModeAndroid}
-                    mode='time'
-                    isVisible={this.state.isDateTimePickerVisible}
-                    onConfirm= {this.handleDatePicked}
-                    onCancel={this.hideDateTimePicker}
+                <TimePicker
+                    onTimeSelected={this.handleDatePicked}
                 />
                 <WeekdayPicker
                     days={this.state.days}
                     onChange={this.handleChange}
                 />
-                <TouchableOpacity activeOpacity={0.5} onPress={this.showDateTimePicker} style={styles.button} >
+                <TouchableOpacity activeOpacity={0.5} onPress={this.EditAlarm} style={styles.button} >
                     <Text style = {styles.buttonText}>
-                        Edit
+                        Save
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5} onPress={this.deletealarm.bind(this, ""+id)} style={styles.button} >
