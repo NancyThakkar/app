@@ -47,8 +47,8 @@ export default class EditDelete extends Component {
         return true;
     }
 
-    displayMessage(message) {
-          ToastExample.delete(message);
+    deletealarm(id) {
+          ToastExample.delete(id);
         { this.props.navigation.replace('List')}
     }
 
@@ -102,7 +102,7 @@ export default class EditDelete extends Component {
                         Edit
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.5} onPress={this.displayMessage.bind(this, ""+id)} style={styles.button} >
+                <TouchableOpacity activeOpacity={0.5} onPress={this.deletealarm.bind(this, ""+id)} style={styles.button} >
                     <Text style = {styles.buttonText}>
                         Delete
                     </Text>

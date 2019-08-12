@@ -141,7 +141,7 @@ public class AlarmListModule extends ReactContextBaseJavaModule {
       alarm.object.Mon=readableMap.getInt("1");
       alarm.object.Tue=readableMap.getInt("2");
       alarm.object.Wed=readableMap.getInt("3");
-      alarm.object.Tue=readableMap.getInt("4");
+      alarm.object.Th=readableMap.getInt("4");
       alarm.object.Fr=readableMap.getInt("5");
       alarm.object.Sat=readableMap.getInt("6");
       alarm.save();
@@ -160,7 +160,7 @@ public class AlarmListModule extends ReactContextBaseJavaModule {
       alarm.object.Mon=readableMap.getInt("1");
       alarm.object.Tue=readableMap.getInt("2");
       alarm.object.Wed=readableMap.getInt("3");
-      alarm.object.Tue=readableMap.getInt("4");
+      alarm.object.Th=readableMap.getInt("4");
       alarm.object.Fr=readableMap.getInt("5");
       alarm.object.Sat=readableMap.getInt("6");
       Hawk.put(id, alarm.object);

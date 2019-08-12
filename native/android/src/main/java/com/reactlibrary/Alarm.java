@@ -17,6 +17,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import android.widget.Toast;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 import timber.log.Timber;
@@ -41,7 +42,7 @@ public class Alarm {
     protected void save() {
         saveAlarm();
         setIntent();
-    }
+  }
 
     private void saveAlarm() {
         String id = object.id;
@@ -54,6 +55,7 @@ public class Alarm {
             Hawk.put("idList", idList);
             Timber.i("Saved alarm ID in list: " + idList.toString());
             Log.e("Saved alarm object: ","sj"+idList.toString());
+                                Log.e("dabwali","object");
         }
     }
 

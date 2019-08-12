@@ -46,7 +46,8 @@ export default class List extends Component {
 
 
     showDateTimePicker = () => {
-        this.setState({ isDateTimePickerVisible: true });
+        /*this.setState({ isDateTimePickerVisible: true });*/
+        this.props.navigation.replace('NewAlarm')
     };
 
     hideDateTimePicker = () => {
@@ -62,7 +63,7 @@ export default class List extends Component {
         dayss[4]=this.state.arraydays[index].Th;
         dayss[5]=this.state.arraydays[index].Fr;
         dayss[6]=this.state.arraydays[index].Sat;
-        ToastExample.show(dayss["1"].toString()+"sunil"+dayss["0"].toString()+this.state.arraydays[index].Sun,ToastExample.SHORT);
+        //ToastExample.show(dayss["1"].toString()+"sunil"+dayss["0"].toString()+this.state.arraydays[index].Sun,ToastExample.SHORT);
         this.props.navigation.replace('EditDelete',{'item': item,'dayss':dayss,})
     };
     handleDatePicked = date => {
