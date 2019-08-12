@@ -6,7 +6,7 @@ import { StyleSheet, View, Text,Button,TouchableOpacity,BackHandler} from 'react
 import ToastExample from '../ToastExample';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import WeekdayPicker from './WeekdayPicker';
-import { TimePicker, DatePicker } from 'react-native-wheel-picker-android';
+import { TimePicker } from 'react-native-wheel-picker-android';
 
 export default class EditDelete extends Component {
     static navigationOptions = {
@@ -51,16 +51,8 @@ export default class EditDelete extends Component {
           ToastExample.delete(id);
         { this.props.navigation.replace('List')}
     }
-
-    showDateTimePicker = () => {
-        this.setState({ isDateTimePickerVisible: true });
-    };
-
-    hideDateTimePicker = () => {
-        this.setState({ isDateTimePickerVisible: false });
-    }
     handleChange = (days) => {
-        //ToastExample.show("sunil"+days("0"),ToastExample.SHORT);
+        //ToastExample.show("days"+days("0"),ToastExample.SHORT);
         this.state.days=days;
         this.setState(days)
     }
@@ -77,16 +69,16 @@ export default class EditDelete extends Component {
         {this.props.navigation.replace('List')}
     }
     render() {
-/*        const navigate  = this.props.navigation;
-        const item = navigate.getParam('item', 'item');*/
         var str=this.state.item.title;
         var id=str.split("          ")[1];
         this.state.id=id;
         var time=str.split(" ")[2];
         let days = { 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
+        const GLOBAL = require('../Globals');
         return (
-            <View style={styles.container}>
+        <View style={styles.container}>
                 <TimePicker
+                    minutes={GLOBAL.MinArray}
                     onTimeSelected={this.handleDatePicked}
                 />
                 <WeekdayPicker
@@ -122,19 +114,9 @@ const styles = StyleSheet.create({
         width: '40%',
         height: 40,
         padding: 10,
-        backgroundColor: '#90A4AE',
+        backgroundColor: '#AAAAAA',
         borderRadius: 8,
         margin: 10
-    },
-        TouchableOpacityStyle:{
-
-        position: 'absolute',
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        right: 30,
-        bottom: 30,
     },
     buttonText: {
         color: '#fff',

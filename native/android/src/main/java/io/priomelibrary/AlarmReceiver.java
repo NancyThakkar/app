@@ -1,9 +1,10 @@
-package io.priome;
+package io.priomelibrary;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import timber.log.Timber;
 
@@ -11,7 +12,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
         Timber.i("Alarm triggered");
-
         // Set the next alarm
         try {
             Thread.sleep(1000);

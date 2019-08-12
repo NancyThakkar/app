@@ -6,7 +6,7 @@ import ToastExample from '../ToastExample';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import WeekdayPicker from './WeekdayPicker';
 import {StyleSheet, FlatList, Text, View, Alert, TouchableOpacity, TextInput, Image,ToolbarAndroid,Button,BackHandler} from 'react-native';
-import { TimePicker, DatePicker } from 'react-native-wheel-picker-android';
+import { TimePicker } from 'react-native-wheel-picker-android';
 export default class NewAlarm extends Component {
 
     static navigationOptions = {
@@ -65,9 +65,11 @@ export default class NewAlarm extends Component {
         { this.props.navigation.replace('List')};
     }
     render() {
+        const GLOBAL = require('../Globals');
         return (
             <View style={styles.MainContainers}>
                 <TimePicker
+                    minutes={GLOBAL.MinArray}
                     onTimeSelected={this.handleDatePicked}
                 />
                 <WeekdayPicker
@@ -101,34 +103,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    textInputStyle: {
-        textAlign: 'center',
-        height: 40,
-        width: '90%',
-        borderWidth: 1,
-        borderColor: '#4CAF50',
-        borderRadius: 7,
-        marginTop: 12
-    },
-
     button: {
         width: '40%',
         height: 40,
         padding: 10,
-        backgroundColor: '#90A4AE',
+        backgroundColor: '#AAAAAA',
         borderRadius: 8,
         margin: 10,
         justifyContent: 'center',
-    },
-    TouchableOpacityStyle:{
-
-        position: 'absolute',
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        right: 30,
-        bottom: 30,
     },
     buttonText: {
         color: '#fff',

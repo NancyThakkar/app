@@ -28,15 +28,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   active: {
-    backgroundColor: '#2ed15e'
+    backgroundColor: '#303F9F'
   },
   inactive: {
-
+    backgroundColor: '#AAAAAA'
   },
   activeText: {
     color: '#ffffff'
   },
   inactiveText: {
-    color: '#d3d3d3'
+    color: '#ffffff'
   }
 });

@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package io.priomelibrary;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

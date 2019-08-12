@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package io.priomelibrary;
 
 /**
  * Created by Rashed on Feb,2019

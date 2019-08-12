@@ -40,12 +40,8 @@ export default class List extends Component {
         });
     }
 
-    SampleFunction=()=>{
-        Alert.alert("Floating Button Clicked");
-    }
 
-
-    showDateTimePicker = () => {
+    showNewAlarm = () => {
         /*this.setState({ isDateTimePickerVisible: true });*/
         this.props.navigation.replace('NewAlarm')
     };
@@ -66,27 +62,6 @@ export default class List extends Component {
         //ToastExample.show(dayss["1"].toString()+"sunil"+dayss["0"].toString()+this.state.arraydays[index].Sun,ToastExample.SHORT);
         this.props.navigation.replace('EditDelete',{'item': item,'dayss':dayss,})
     };
-    handleDatePicked = date => {
-        console.log("A date has been picked: ", date);
-       // ToastExample.show(date.getDay()+""+date.getMonth()+date.getHours()+""+date.getMinutes(),ToastExample.SHORT);
-        this.hideDateTimePicker();
-        var dat = new Date();
-        var month=dat.getMonth()+1;
-        dat=date;
-        this.hideDateTimePicker();
-        let days={ 1:0, 2:0 , 3:0 , 4:0 , 5:0, 6:0, 0:0 };
-        ToastExample.saveAlarm(dat.getDate(),dat.getMonth()+1,dat.getHours(),dat.getMinutes(),0,days);
-        this.array=[]
-        this.setState({ arrayHolder: [...this.array] })
-        ToastExample.returnArrayOfObjects(array => {
-            this.state.arraydays=array;
-            console.log(array, "The array you sent from the native side");
-            for(let i=0;i<array.length;i++){
-                {this.array.push({title :array[i].date +" "+ array[i].month+" "+array[i].hour + ':'+ array[i].minute+"          "+array[i].id});this.setState({ arrayHolder: [...this.array] })}
-            }
-        });
-    };
-
 
     render() {
         return (
@@ -100,14 +75,7 @@ export default class List extends Component {
                     renderItem={({ item,index }) => <Text style={styles.item}   onPress={this.ListClick.bind(this, index,item)} > {item.title} </Text>
                     }
                 />
-                <DateTimePicker
-                    mode='time'
-                    timePickerModeAndroid={this.state.timePickerModeAndroid}
-                    isVisible={this.state.isDateTimePickerVisible}
-                    onConfirm= {this.handleDatePicked}
-                    onCancel={this.hideDateTimePicker}
-                />
-                <TouchableOpacity activeOpacity={0.5} onPress={this.showDateTimePicker} style={styles.TouchableOpacityStyle} >
+                <TouchableOpacity activeOpacity={0.5} onPress={this.showNewAlarm} style={styles.TouchableOpacityStyle} >
 
                     <Image source={{uri : 'https://reactnativecode.com/wp-content/uploads/2017/11/Floating_Button.png'}}
 
@@ -118,13 +86,6 @@ export default class List extends Component {
             </View>
     );
     }
-
-
-
-    componentDidMount() {this.setState({ arrayHolder: [...this.array] })}
-
-
-    joinData = () => {this.array.push({title : this.state.textInput_Holder});this.setState({ arrayHolder: [...this.array] })}
 
     FlatListItemSeparator = () => {
         return (
@@ -138,7 +99,6 @@ export default class List extends Component {
         );
     }
 
-    GetItem(item) {Alert.alert(item);}
 }
 
 const styles = StyleSheet.create({
@@ -158,36 +118,6 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 18,
         height: 44,
-    },
-
-    textInputStyle: {
-        textAlign: 'center',
-        height: 40,
-        width: '90%',
-        borderWidth: 1,
-        borderColor: '#4CAF50',
-        borderRadius: 7,
-        marginTop: 12
-    },
-
-    button: {
-        width: '90%',
-        height: 40,
-        padding: 10,
-        backgroundColor: '#4CAF50',
-        borderRadius: 8,
-        marginTop: 10
-    },
-
-    buttonText: {
-        color: '#fff',
-        textAlign: 'center',
-    },
-    MainContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor : '#F5F5F5'
     },
 
     TouchableOpacityStyle:{

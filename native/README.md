@@ -22,7 +22,7 @@
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNNativePackage;` to the imports at the top of the file
+  - Add `import io.priomelibrary.RNNativePackage;` to the imports at the top of the file
   - Add `new RNNativePackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
@@ -50,4 +50,3 @@ import RNNative from 'react-native-native';
 // TODO: What to do with the module?
 RNNative;
 ```
-  
